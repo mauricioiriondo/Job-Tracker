@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -42,6 +43,7 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
       status: prospect.status as InsertProspect["status"],
       interestLevel: prospect.interestLevel as InsertProspect["interestLevel"],
       salary: prospect.salary ?? "",
+      sponsorsVisa: prospect.sponsorsVisa ?? false,
       notes: prospect.notes ?? "",
     },
   });
@@ -177,6 +179,28 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
                 />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="sponsorsVisa"
+          render={({ field }) => (
+            <FormItem className="flex items-start gap-3 rounded-md border border-border p-3">
+              <FormControl>
+                <Checkbox
+                  checked={field.value ?? false}
+                  onCheckedChange={field.onChange}
+                  data-testid="checkbox-edit-sponsors-visa"
+                />
+              </FormControl>
+              <div className="leading-tight">
+                <FormLabel className="cursor-pointer">Sponsors international students</FormLabel>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  The role explicitly mentions visa sponsorship
+                </p>
+              </div>
             </FormItem>
           )}
         />

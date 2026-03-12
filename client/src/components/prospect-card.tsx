@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Prospect } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Trash2, Pencil, DollarSign } from "lucide-react";
+import { ExternalLink, Trash2, Pencil, DollarSign, GraduationCap } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -106,6 +106,12 @@ export function ProspectCard({ prospect }: { prospect: Prospect }) {
             <span className="inline-flex items-center gap-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400" data-testid={`text-salary-${prospect.id}`}>
               <DollarSign className="w-3 h-3" />
               {prospect.salary}
+            </span>
+          )}
+          {prospect.sponsorsVisa && (
+            <span className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400" data-testid={`badge-sponsors-visa-${prospect.id}`}>
+              <GraduationCap className="w-3 h-3" />
+              Sponsors visa
             </span>
           )}
         </div>

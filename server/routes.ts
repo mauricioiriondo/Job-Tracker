@@ -56,6 +56,7 @@ export async function registerRoutes(
     }
 
     if (body.salary !== undefined) updates.salary = body.salary || null;
+    if (body.sponsorsVisa !== undefined) updates.sponsorsVisa = Boolean(body.sponsorsVisa);
 
     const updated = await storage.updateProspect(id, updates);
     res.json(updated);
