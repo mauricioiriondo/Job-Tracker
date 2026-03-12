@@ -55,6 +55,8 @@ export async function registerRoutes(
       updates.interestLevel = level;
     }
 
+    if (body.salary !== undefined) updates.salary = body.salary || null;
+
     const updated = await storage.updateProspect(id, updates);
     res.json(updated);
   });
