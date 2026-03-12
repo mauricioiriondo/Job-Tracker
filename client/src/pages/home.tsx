@@ -19,6 +19,13 @@ import { Badge } from "@/components/ui/badge";
 type InterestFilter = "All" | "High" | "Medium" | "Low";
 const INTEREST_FILTERS: InterestFilter[] = ["All", "High", "Medium", "Low"];
 
+const interestMeta: Record<InterestFilter, { icon: string; label: string; activeClass: string }> = {
+  All:    { icon: "",   label: "All",    activeClass: "bg-primary text-primary-foreground border-primary" },
+  High:   { icon: "🔥", label: "High",   activeClass: "bg-red-500 text-white border-red-500" },
+  Medium: { icon: "👍", label: "Medium", activeClass: "bg-yellow-400 text-yellow-900 border-yellow-400" },
+  Low:    { icon: "🤷", label: "Low",    activeClass: "bg-green-500 text-white border-green-500" },
+};
+
 const columnColors: Record<string, string> = {
   Bookmarked: "bg-blue-500",
   Applied: "bg-indigo-500",
@@ -68,20 +75,24 @@ function KanbanColumn({
       </div>
 
       <div className="flex items-center gap-1 px-2 pt-2 pb-1 flex-wrap">
-        {INTEREST_FILTERS.map((f) => (
-          <button
-            key={f}
-            onClick={() => setInterestFilter(f)}
-            className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-              interestFilter === f
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-transparent text-muted-foreground border-border hover:border-foreground/40 hover:text-foreground"
-            }`}
-            data-testid={`filter-${columnSlug}-${f.toLowerCase()}`}
-          >
-            {f}
-          </button>
-        ))}
+        {INTEREST_FILTERS.map((f) => {
+          const meta = interestMeta[f];
+          const isActive = interestFilter === f;
+          return (
+            <button
+              key={f}
+              onClick={() => setInterestFilter(f)}
+              className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
+                isActive
+                  ? meta.activeClass
+                  : "bg-transparent text-muted-foreground border-border hover:border-foreground/40 hover:text-foreground"
+              }`}
+              data-testid={`filter-${columnSlug}-${f.toLowerCase()}`}
+            >
+              {meta.icon && <span className="mr-0.5">{meta.icon}</span>}{meta.label}
+            </button>
+          );
+        })}
       </div>
 
       <div className="flex-1 overflow-y-auto px-2 py-2">
