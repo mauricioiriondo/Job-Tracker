@@ -49,6 +49,12 @@ export function validateProspect(data: Record<string, unknown>): { valid: boolea
     }
   }
 
+  if (data.sponsorsVisa !== undefined && data.sponsorsVisa !== null) {
+    if (typeof data.sponsorsVisa !== "boolean") {
+      errors.push("Sponsors visa must be a boolean");
+    }
+  }
+
   return { valid: errors.length === 0, errors };
 }
 
